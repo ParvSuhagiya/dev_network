@@ -287,11 +287,14 @@ const Teams = () => {
       }} />
 
       <div style={{ position: 'relative', zIndex: 1, textAlign: 'center', padding: '60px 20px 40px', maxWidth: '800px', margin: '0 auto' }}>
-        <h1 style={{ color: '#ffffff', fontSize: '48px', fontWeight: '800', letterSpacing: '-1.5px', marginBottom: '16px', lineHeight: 1.2 }}>
-          Developer <span style={{ color: '#FACC15' }}>Teams</span>
+        <div style={{ display: 'inline-block', background: 'rgba(250,204,21,0.08)', border: '1px solid rgba(250,204,21,0.2)', borderRadius: '30px', padding: '4px 16px', marginBottom: '20px' }}>
+          <span style={{ color: '#FACC15', fontSize: '11px', fontWeight: '700', letterSpacing: '1.5px', textTransform: 'uppercase' }}>Hackathon Teams</span>
+        </div>
+        <h1 style={{ color: '#ffffff', fontSize: '46px', fontWeight: '800', letterSpacing: '-1.5px', marginBottom: '14px', lineHeight: 1.15 }}>
+          Build Together, <span style={{ color: '#FACC15' }}>Win Together</span>
         </h1>
-        <p style={{ color: '#9ca3af', fontSize: '18px', marginBottom: '40px', lineHeight: 1.6 }}>
-          Join forces with other engineers. Create your own team of 4, or join an existing one to collaborate and build amazing projects together.
+        <p style={{ color: '#6b7280', fontSize: '16px', marginBottom: '40px', lineHeight: 1.65, maxWidth: '560px', margin: '0 auto 40px' }}>
+          Form a team of up to 4 developers. Request to join existing teams or create your own and invite the best builders around.
         </p>
 
         {/* Pending Invites Banner */}
