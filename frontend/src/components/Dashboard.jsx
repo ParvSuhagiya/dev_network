@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Navbar from './navbar/Navbar'
+import { apiUrl } from '../lib/api'
 
 const Dashboard = () => {
   const navigate = useNavigate()
@@ -22,7 +23,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch('/api/users');
+        const res = await fetch(apiUrl('/api/users'));
         if (res.ok) {
           const fetchedUsers = await res.json();
           setAllUsers(fetchedUsers.filter(u => u.email !== JSON.parse(localStorage.getItem('devnetwork_user'))?.email));
@@ -33,7 +34,7 @@ const Dashboard = () => {
     const fetchTeams = async () => {
       try {
         const currentUser = JSON.parse(localStorage.getItem('devnetwork_user'));
-        const res = await fetch('/api/teams');
+        const res = await fetch(apiUrl('/api/teams'));
         if (res.ok) {
           const teams = await res.json();
           setMyTeam(teams.find(t => t.leader === currentUser?.email) || null);
@@ -48,14 +49,14 @@ const Dashboard = () => {
     if (!myTeam) return;
     setInvitingUser(inviteeEmail);
     try {
-      const res = await fetch(`/api/teams/${encodeURIComponent(myTeam.name)}/invite`, {
+      const res = await fetch(apiUrl(`/api/teams/${encodeURIComponent(myTeam.name)}/invite`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ leaderEmail: user.email, inviteeEmail })
       });
       const data = await res.json();
       if (res.ok) {
-        const teamsRes = await fetch('/api/teams');
+        const teamsRes = await fetch(apiUrl('/api/teams'));
         if (teamsRes.ok) {
           const teams = await teamsRes.json();
           setMyTeam(teams.find(t => t.leader === user.email) || null);

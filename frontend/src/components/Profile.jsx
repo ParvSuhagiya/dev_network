@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './navbar/Navbar';
+import { apiUrl } from '../lib/api';
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -29,7 +30,7 @@ const Profile = () => {
   const handleSave = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/users/${encodeURIComponent(user.email)}`, {
+      const res = await fetch(apiUrl(`/api/users/${encodeURIComponent(user.email)}`), {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)

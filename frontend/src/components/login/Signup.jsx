@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { apiUrl } from '../../lib/api'
 
 const inputStyle = {
   width: '100%', padding: '11px 16px',
@@ -49,7 +50,7 @@ const Signup = () => {
 
     setLoading(true)
     try {
-      const res = await fetch('/api/auth/signup', {
+      const res = await fetch(apiUrl('/api/auth/signup'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

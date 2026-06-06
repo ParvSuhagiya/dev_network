@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './navbar/Navbar';
+import { apiUrl } from '../lib/api';
 
 const Teams = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const Teams = () => {
 
   const fetchTeams = async () => {
     try {
-      const res = await fetch('/api/teams');
+      const res = await fetch(apiUrl('/api/teams'));
       if (res.ok) {
         const data = await res.json();
         setAllTeams(data);
@@ -53,7 +54,7 @@ const Teams = () => {
     if (!newTeamName.trim()) return alert("Enter a team name");
     setCreating(true);
     try {
-      const res = await fetch('/api/teams', {
+      const res = await fetch(apiUrl('/api/teams'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
@@ -85,7 +86,7 @@ const Teams = () => {
   const handleRequestJoin = async (teamName) => {
     setJoining(teamName);
     try {
-      const res = await fetch(`/api/teams/${encodeURIComponent(teamName)}/request-join`, {
+      const res = await fetch(apiUrl(`/api/teams/${encodeURIComponent(teamName)}/request-join`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: user.email })
@@ -106,7 +107,7 @@ const Teams = () => {
 
   const handleAcceptJoin = async (teamName, requesterEmail) => {
     try {
-      const res = await fetch(`/api/teams/${encodeURIComponent(teamName)}/accept-join`, {
+      const res = await fetch(apiUrl(`/api/teams/${encodeURIComponent(teamName)}/accept-join`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ leaderEmail: user.email, requesterEmail })
@@ -125,7 +126,7 @@ const Teams = () => {
 
   const handleRejectJoin = async (teamName, requesterEmail) => {
     try {
-      const res = await fetch(`/api/teams/${encodeURIComponent(teamName)}/reject-join`, {
+      const res = await fetch(apiUrl(`/api/teams/${encodeURIComponent(teamName)}/reject-join`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ leaderEmail: user.email, requesterEmail })
@@ -148,7 +149,7 @@ const Teams = () => {
     if (!email) return alert("Enter the user's email to invite");
     setInviting(teamName);
     try {
-      const res = await fetch(`/api/teams/${encodeURIComponent(teamName)}/invite`, {
+      const res = await fetch(apiUrl(`/api/teams/${encodeURIComponent(teamName)}/invite`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ leaderEmail: user.email, inviteeEmail: email })
@@ -172,7 +173,7 @@ const Teams = () => {
   const handleAcceptInvite = async (teamName) => {
     setRespondingInvite(teamName + '_accept');
     try {
-      const res = await fetch(`/api/teams/${encodeURIComponent(teamName)}/accept-invite`, {
+      const res = await fetch(apiUrl(`/api/teams/${encodeURIComponent(teamName)}/accept-invite`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ inviteeEmail: user.email })
@@ -197,7 +198,7 @@ const Teams = () => {
   const handleRejectInvite = async (teamName) => {
     setRespondingInvite(teamName + '_reject');
     try {
-      const res = await fetch(`/api/teams/${encodeURIComponent(teamName)}/reject-invite`, {
+      const res = await fetch(apiUrl(`/api/teams/${encodeURIComponent(teamName)}/reject-invite`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ inviteeEmail: user.email })
@@ -221,7 +222,7 @@ const Teams = () => {
     if (!window.confirm(`Are you sure you want to leave team "${teamName}"?`)) return;
     setLeavingTeam(true);
     try {
-      const res = await fetch(`/api/teams/${encodeURIComponent(teamName)}/leave`, {
+      const res = await fetch(apiUrl(`/api/teams/${encodeURIComponent(teamName)}/leave`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: user.email })
@@ -247,7 +248,7 @@ const Teams = () => {
     if (!window.confirm(`Remove this member from "${teamName}"?`)) return;
     setRemovingMember(memberEmail);
     try {
-      const res = await fetch(`/api/teams/${encodeURIComponent(teamName)}/remove-member`, {
+      const res = await fetch(apiUrl(`/api/teams/${encodeURIComponent(teamName)}/remove-member`), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ leaderEmail: user.email, memberEmail })

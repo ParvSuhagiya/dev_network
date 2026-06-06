@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { apiUrl } from '../../lib/api'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -19,7 +20,7 @@ const Login = () => {
     if (!form.email || !form.password) return showToast('Please fill all fields.', 'error')
     setLoading(true)
     try {
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(apiUrl('/api/auth/login'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(form)
